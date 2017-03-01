@@ -14,7 +14,7 @@ public class MyResource {
 
 	@GetMapping("/myresource")
 	public ResponseEntity<ContactModel> getMyResource() {
-		ContactModel cm = new ContactModel(10, "Bryan", "Stevens", "4365823", "Medellín");
+		ContactModel cm = new ContactModel(10, "Giggs", "Stevens", "4365823", "Medellín");
 		return new ResponseEntity<ContactModel>(cm , HttpStatus.OK);
 	}
 
