@@ -28,7 +28,12 @@ public class UserService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		com.giggs.entity.User user = userRepository.findByUsername(username);
-		List<GrantedAuthority> authorities = buildAuthorities((user != null) ? user.getRoles() : null);
+		
+//		List<GrantedAuthority> authorities = buildAuthorities((user != null) ? user.getRoles() : null);
+		if(user == null) {
+			throw new UsernameNotFoundException("Username: " + username + " not found.");
+		}
+		List<GrantedAuthority> authorities = buildAuthorities(user.getRoles());
 		return buildUser(user, authorities);
 	}
 
@@ -43,11 +48,11 @@ public class UserService implements UserDetailsService {
 		 * SimpleGrantedAuthority(userRole.getRole())); } return new
 		 * ArrayList<>(auths);
 		 */
-		if (userRoles != null) {
+//		if (userRoles != null) {
 			return new ArrayList<>(userRoles.stream().map(ur -> new SimpleGrantedAuthority(ur.getRole()))
 					.collect(Collectors.toList()));
-		}
-		return null;
+//		}
+//		return null;
 	}
 
 }
